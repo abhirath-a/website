@@ -1,45 +1,37 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
+import { type Post } from "@/content/config";
 import Layout from "@/layouts/Layout.astro";
-import { Separator } from "@/components/ui/separator";
 
 export async function getStaticPaths() {
-	const posts = await getCollection("blog", ({ data }) => {
-		return data.draft !== true;
-	});
-	// @ts-ignore
-	return posts.map((post: Post) => ({
-		params: { slug: post.slug },
-		props: post,
-	}));
+  const posts = await getCollection("blog");
+  return posts.map((post: Post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
 }
-type Props = CollectionEntry<"blog">;
-
-const post = Astro.props;
-const { Content } = await post.render();
+type Props = Post;
+const {
+  render: renderContent,
+  data: { title, description, date },
+} = Astro.props;
+const { Content } = await renderContent();
 ---
 
-<Layout title={post.data.title}>
-
+<Layout title={title}>
   <main class="flex w-full flex-col gap-2 overflow-x-hidden">
-    <header class="flex w-full flex-col gap-3 mb-2">
-      {post.data.title && <h1 class="text-4xl font-bold">{post.data.title}</h1>}
-      {post.data.description && <p class="dark:text-slate-300 text-slate-600 italic text-sm">"{post.data.description}"</p>}
-      {
-        post.data.date && (
-          <time class="dark:text-slate-400 text-slate-500">
-            {new Date(post.data.date).toDateString()}
-          </time>
-        )
-      }
-    </header> 
-
-    <div class="my-2">    <Separator />
-</div>
-    <article class="prose dark:prose-invert flex w-full flex-col md:max-w-4xl overflow-x-hidden">
+    <header class="mb-2 flex w-full flex-col gap-3">
+      <h1 class="text-4xl font-bold">{title}</h1>
+      <p class="text-sm text-slate-600 dark:text-slate-300">{description}</p>
+      <time class="text-slate-500 dark:text-slate-400">
+        {new Date(date).toDateString()}
+      </time>
+    </header>
+    <div class="bg-border my-2 h-[1px] w-full shrink-0"></div>
+    <article
+      class="prose dark:prose-invert flex w-full flex-col overflow-x-hidden md:max-w-4xl"
+    >
       <Content />
     </article>
   </main>
-
 </Layout>

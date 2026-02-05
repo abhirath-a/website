@@ -1,10 +1,13 @@
 ---
 interface Props {
-	title: string;
-	classList?: string;
+  frontmatter?: { title: string; prose: boolean };
+  title?: string;
 }
 
-const { title } = Astro.props;
+const { title: propTitle, frontmatter } = Astro.props;
+
+const title = propTitle ?? frontmatter?.title ?? "";
+
 import "../styles/globals.css";
 import "@fontsource-variable/inter";
 import Header from "@/components/Header.astro";
@@ -22,25 +25,25 @@ import Header from "@/components/Header.astro";
       {title} - Abhirath
     </title>
   </head>
-  <body>
+  <body class="bg-background text-foreground relative min-h-screen">
+    <div id="grid-bg" class="grid-background fixed inset-0 z-0" />
+    <Header />
 
-<div class="min-h-screen bg-background text-foreground relative">
-  <!-- Mouse background -->
-    <div id="grid-bg" class="fixed inset-0 z-0 grid-background" />
-      <Header />
-
-    <main class="lg:ml-64 px-6 lg:pl-32 lg:pr-16 py-20 lg:py-16 max-w-4xl w-full mt-16 lg:mt-0">
+    <main
+      class:list={[
+        "bg-background/5 mt-16 min-h-full w-full max-w-4xl px-6 py-20 backdrop-blur-xs lg:mt-0 lg:ml-64 lg:py-16 lg:pr-16 lg:pl-32",
+        { "prose dark:prose-invert": frontmatter?.prose ?? false },
+      ]}
+    >
       <slot />
-
     </main>
-  </div>
-  <script is:inline>
-    // Mouse position for CSS
-    const gridBg = document.getElementById('grid-bg');
-    document.addEventListener('mousemove', (e) => {
-      gridBg.style.setProperty('--mouse-x', e.clientX + 'px');
-      gridBg.style.setProperty('--mouse-y', e.clientY + 'px');
-    });
-  </script>
+
+    <script is:inline>
+      const gridBg = document.getElementById("grid-bg");
+      document.addEventListener("mousemove", (e) => {
+        gridBg.style.setProperty("--mouse-x", e.clientX + "px");
+        gridBg.style.setProperty("--mouse-y", e.clientY + "px");
+      });
+    </script>
   </body>
 </html>

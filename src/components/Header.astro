@@ -1,92 +1,149 @@
 ---
 import { SunMoon } from "@lucide/astro";
 
+const SITE_NAME = "Abhi";
+const YEAR = new Date().getFullYear();
+const pathname = Astro.url.pathname;
+
 const navLinks = [
   { href: "/", label: "About" },
   { href: "/blog", label: "Blog" },
-  { href: "/search", label: "Search" },
+  // { href: "/search", label: "Search" },
   { href: "/contact", label: "Contact" },
   { href: "/now", label: "Now" },
 ];
 ---
 
-<aside class="hidden lg:block lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-64 p-12 lg:flex lg:flex-col lg:justify-between">
+<!-- Desktop Sidebar -->
+<aside
+  class="bg-background/5 border-border hidden border-r p-12 backdrop-blur-xs lg:fixed lg:top-0 lg:left-0 lg:block lg:flex lg:h-screen lg:w-64 lg:flex-col lg:justify-between"
+>
   <div>
-    <a href="#about" class="block mb-16">
-      <h1 class="text-xl font-bold tracking-tight">Abhirath</h1>
+    <a href="#about" class="mb-16 block">
+      <h1 class="text-xl font-bold tracking-tight">{SITE_NAME}</h1>
     </a>
+
     <nav class="flex flex-col gap-1">
-      {navLinks.map(link => (
-        <a 
-          href={link.href} 
-          class={`py-2 text-sm font-medium transition-opacity ${
-            Astro.url.pathname === link.href ? "opacity-100 font-bold" : "opacity-40 hover:opacity-70"
-          }`}
-        >
-          {link.label}
-        </a>
-      ))}
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "py-2 text-sm font-medium transition-opacity",
+              {
+                "font-bold opacity-100": pathname === link.href,
+                "opacity-40 hover:opacity-70": pathname !== link.href,
+              },
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
     </nav>
   </div>
+
   <div class="space-y-4">
-    <button id="theme-toggle" class="block text-xs font-medium opacity-40 hover:opacity-70 transition-opacity">
-      <SunMoon class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+    <button
+      id="theme-toggle"
+      class="block text-xs font-medium opacity-40 transition-opacity hover:opacity-70"
+    >
+      <SunMoon
+        class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all"
+      />
     </button>
-    <div class="text-xs opacity-40">{new Date().getFullYear()}</div>
+
+    <div class="text-xs opacity-40">{YEAR}</div>
   </div>
 </aside>
 
-<!-- Mobile nav -->
-<nav class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+<!-- Mobile Nav -->
+<nav
+  class="bg-background/80 border-border fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-sm lg:hidden"
+>
   <div class="flex items-center justify-between px-6 py-4">
-    <a href="#about" class="text-lg font-bold tracking-tight">Abhirath</a>
-    <button id="mobile-menu-btn" class="text-sm font-medium opacity-40 hover:opacity-70 transition-opacity">Menu</button>
+    <a href="#about" class="text-lg font-bold tracking-tight">
+      {SITE_NAME}
+    </a>
+
+    <button
+      id="mobile-menu-btn"
+      class="text-sm font-medium opacity-40 transition-opacity hover:opacity-70"
+    >
+      Menu
+    </button>
   </div>
-  <div id="mobile-menu" class="hidden px-6 py-4 border-t border-border bg-background flex flex-col gap-3 mb-4">
-    {navLinks.map(link => (
-      <a
-        href={link.href}
-        class={`text-sm font-medium transition-opacity ${
-          Astro.url.pathname === link.href ? "opacity-100 font-bold" : "opacity-40 hover:opacity-70"
-        }`}
+
+  <div
+    id="mobile-menu"
+    class="border-border bg-background mb-4 flex hidden flex-col gap-3 border-t px-6 py-4"
+  >
+    {
+      navLinks.map((link) => {
+        const active = pathname === link.href;
+
+        return (
+          <a
+            href={link.href}
+            class:list={[
+              "text-sm font-medium transition-opacity",
+              {
+                "font-bold opacity-100": active,
+                "opacity-40 hover:opacity-70": !active,
+              },
+            ]}
+          >
+            {link.label}
+          </a>
+        );
+      })
+    }
+
+    <div class="border-border flex items-center justify-between border-t pt-3">
+      <button
+        id="theme-toggle-mobile"
+        class="text-xs font-medium opacity-40 transition-opacity hover:opacity-70"
       >
-        {link.label}
-      </a>
-    ))}
-    <div class="flex items-center justify-between pt-3 border-t border-border">
-      <button id="theme-toggle-mobile" class="text-xs font-medium opacity-40 hover:opacity-70 transition-opacity">
-        <SunMoon class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+        <SunMoon
+          class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all"
+        />
       </button>
-      <div class="text-xs opacity-40">{new Date().getFullYear()}</div>
+
+      <div class="text-xs opacity-40">{YEAR}</div>
     </div>
   </div>
 </nav>
 
+<script is:inline>
+  const applyTheme = (mode) => {
+    document.documentElement.classList.toggle("dark", mode === "dark");
+    localStorage.setItem("theme", mode);
+  };
 
-  <script is:inline>
-    // Theme toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-    function toggleTheme() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  };
 
-    }
-    themeToggle.addEventListener('click', toggleTheme);
-    themeToggleMobile.addEventListener('click', toggleTheme);
+  document
+    .getElementById("theme-toggle")
+    .addEventListener("click", toggleTheme);
+  document
+    .getElementById("theme-toggle-mobile")
+    .addEventListener("click", toggleTheme);
 
-    // Mobile menu
-    const menuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      menuBtn.textContent = mobileMenu.classList.contains('hidden') ? 'Menu' : 'Close';
-    });
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
 
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+    menuBtn.textContent = mobileMenu.classList.contains("hidden")
+      ? "Menu"
+      : "Close";
+  });
 
-    // Initialize theme on load
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    }
+  const saved = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  applyTheme(saved ?? (prefersDark ? "dark" : "light"));
 </script>

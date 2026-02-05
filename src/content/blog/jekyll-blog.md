@@ -21,9 +21,11 @@ bundle exec jekyll serve --livereload
 And you can now open it in your browser at `http://localhost:4000`.
 
 ## Customization
-You can customize the blog in the _config.yml file, it's self expalantory. You can also add new posts in the _posts folder, and they will be automatically added to the blog. Sometimes it doesn't reload the config file on change so you may have to restart the server.
+
+You can customize the blog in the \_config.yml file, it's self expalantory. You can also add new posts in the \_posts folder, and they will be automatically added to the blog. Sometimes it doesn't reload the config file on change so you may have to restart the server.
 
 ## Deployment
+
 You can deploy this website for free, without any (real) vendor lock in. First create a Github account (if you haven't already). Then, create a github repo and call it `YOUR_GITHUB_USERNAME`.github.io. Now we need to initialize a git repo inside of the jekyll project. First run
 
 ```bash

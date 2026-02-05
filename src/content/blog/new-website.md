@@ -23,4 +23,4 @@ This was entirely because this is the framework I am most familiar with, and bec
 
 ## Tailwind CSS + Shadcn UI
 
-I love Tailwind CSS's approach with atomic styling, and it has become almost a default in many of my projects, however it's time consuming to create components manually and it's usually hard to find a component library with defaults I like, because changing them is too hard and boring. That's why I used Shadcn UI. though it is a set of re-usable components and not really a full-blown UI library like Daisy UI, it's more than enough for this project.  [Tailwind CSS](https://tailwindcss.com/), [Shadcn UI](https://ui.shadcn.com/)
+I love Tailwind CSS's approach with atomic styling, and it has become almost a default in many of my projects, however it's time consuming to create components manually and it's usually hard to find a component library with defaults I like, because changing them is too hard and boring. That's why I used Shadcn UI. though it is a set of re-usable components and not really a full-blown UI library like Daisy UI, it's more than enough for this project. [Tailwind CSS](https://tailwindcss.com/), [Shadcn UI](https://ui.shadcn.com/)

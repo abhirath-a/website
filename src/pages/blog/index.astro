@@ -1,28 +1,24 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
-interface Post {
-	data: { title: string; date: string; description?: string };
-	slug: string;
-}
-const unfilteredPosts = await getCollection("blog");
-const posts = unfilteredPosts.filter((post) => !post.data.draft);
+import type { Post } from "@/content/config";
+import Layout from "@/layouts/Layout.astro";
+
+const posts: Post[] = await getCollection("blog");
 
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout title="Blog">
-   
-    <ul class="">
-      {
-        posts.map((post) => (
-          <li class="flex justify-between my-2">
-            <a href={`/blog/${post.slug}/`} class="underline text-lg">
-              {post.data.title}
-            </a>
-            <p>{new Date(post.data.date).toLocaleDateString()}</p>
-          </li>
-        ))
-      }
-    </ul>
+  <ul>
+    {
+      posts.map(({ data: post, slug }) => (
+        <li class="my-2 flex justify-between">
+          <a href={`/blog/${slug}/`} class="text-lg underline">
+            {post.title}
+          </a>
+          <p>{new Date(post.date).toLocaleDateString()}</p>
+        </li>
+      ))
+    }
+  </ul>
 </Layout>
