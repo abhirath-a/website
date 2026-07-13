@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/git-pages@v2
         with:
-          site: https://abhirath.net
+          site: https://www.abhirath.net
           server: codeberg.page
           token: ${{ forge.token }}
           source: dist/
