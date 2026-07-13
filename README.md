@@ -1,9 +1,3 @@
-# Portfolio Website
+# website
 
-> A simple portfolio website using Astro, ReactJS, TailwindCSS, and ShadcnUI
-
-## Features
-
-- ⚡ Fast start time + content using Astro.
-- 📦 MDX for beautiful content.
-- 🌈 ShadcnUI for beautiful UI.
+this is the repo for my website hosted on [abhirath.net](https://www.abhirath.net).
