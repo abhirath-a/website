@@ -19,7 +19,7 @@ jobs:
           version: 11
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --allow-build=esbuild --allow-build=sharp
 
       - name: Build Astro site
         run: pnpm run build
