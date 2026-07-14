@@ -136,3 +136,4 @@ With this, you now have a framework agnostic Astro theme switcher! Final code:
   );
 </script>
 ```
+

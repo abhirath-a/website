@@ -1,8 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import projects from "../projects";
-import { getCollection } from "astro:content";
-const posts = (await getCollection("blog")).splice(0, 3);
 ---
 
 <Layout title="About">
@@ -41,32 +39,6 @@ const posts = (await getCollection("blog")).splice(0, 3);
             </div>
             <span class="text-muted-foreground shrink-0 text-sm font-medium sm:ml-6">
               {project.year}
-            </span>
-          </div>
-        ))
-      }
-    </div>
-  </section>
-
-  <!-- Writing -->
-  <section id="writing" class="border-border border-t py-12 lg:py-20">
-    <h3
-      class="text-muted-foreground mb-8 text-sm font-bold tracking-wider uppercase lg:mb-12"
-    >
-      Writing
-    </h3>
-    <div class="space-y-6">
-      {
-        posts.map((post) => (
-          <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-            <a
-              href={`#${post.slug}`}
-              class="hover:text-accent-blue text-base font-medium transition-colors lg:text-lg"
-            >
-              {post.data.title}
-            </a>
-            <span class="text-muted-foreground shrink-0 text-sm sm:ml-6">
-              {new Date(post.data.date).toLocaleDateString()}
             </span>
           </div>
         ))

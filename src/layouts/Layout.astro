@@ -1,49 +1,87 @@
 ---
 interface Props {
-  frontmatter?: { title: string; prose: boolean };
+  frontmatter?: {
+    title: string;
+    prose: boolean;
+  };
   title?: string;
 }
-
-const { title: propTitle, frontmatter } = Astro.props;
-
-const title = propTitle ?? frontmatter?.title ?? "";
 
 import "../styles/globals.css";
 import "@fontsource-variable/inter";
 import Header from "@/components/Header.astro";
+
+const { title: propTitle, frontmatter } = Astro.props;
+
+const title = propTitle ?? frontmatter?.title ?? "";
+const prose = frontmatter?.prose ?? false;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="icon" href="/favicon.svg" />
+
     <meta name="generator" content={Astro.generator} />
-    <title>
-      {title} - Abhirath
-    </title>
+
+    <title>{title ? `${title} · Abhirath` : "Abhirath"}</title>
   </head>
-  <body class="bg-background text-foreground relative min-h-screen">
-    <div id="grid-bg" class="grid-background fixed inset-0 z-0" />
+
+  <body class="bg-background text-foreground min-h-screen antialiased">
+    <!-- Interactive background -->
+    <div
+      id="grid-bg"
+      aria-hidden="true"
+      class="grid-background pointer-events-none fixed inset-0 -z-10"
+    />
+
     <Header />
 
     <main
       class:list={[
-        "bg-background/5 mt-16 min-h-full w-full max-w-4xl px-6 py-20 backdrop-blur-xs lg:mt-0 lg:ml-64 lg:py-16 lg:pr-16 lg:pl-32",
-        { "prose dark:prose-invert": frontmatter?.prose ?? false },
+        "bg-background/5 backdrop-blur",
+        "mt-16 min-h-screen",
+        "w-full max-w-4xl",
+        "px-6 py-20",
+        "lg:mt-0 lg:ml-64 lg:px-32 lg:py-16",
+        {
+          "prose dark:prose-invert": prose,
+        },
       ]}
     >
       <slot />
     </main>
 
     <script is:inline>
-      const gridBg = document.getElementById("grid-bg");
-      document.addEventListener("mousemove", (e) => {
-        gridBg.style.setProperty("--mouse-x", e.clientX + "px");
-        gridBg.style.setProperty("--mouse-y", e.clientY + "px");
-      });
+      (() => {
+        const bg = document.getElementById("grid-bg");
+        if (!bg) return;
+
+        let mouseX = innerWidth / 2;
+        let mouseY = innerHeight / 2;
+        let frame = 0;
+
+        const update = () => {
+          bg.style.setProperty("--mouse-x", `${mouseX}px`);
+          bg.style.setProperty("--mouse-y", `${mouseY}px`);
+          frame = 0;
+        };
+
+        addEventListener(
+          "pointermove",
+          (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            if (!frame) frame = requestAnimationFrame(update);
+          },
+          { passive: true }
+        );
+      })();
     </script>
   </body>
 </html>

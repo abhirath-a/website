@@ -138,10 +138,6 @@
   }
 }
 
-* {
-  border-color: var(--border);
-}
-
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -152,46 +148,78 @@ body {
     "calt" 1;
 }
 
-/* Pure CSS grid implementation using linear gradients */
 .grid-background {
-  /* Base grid - very subtle */
-  background-image:
-    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-  background-size: 24px 24px;
-  pointer-events: none;
+    --grid-size: 28px;
+
+    position: fixed;
+    inset: 0;
+
+    background:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+
+    background-size:
+        var(--grid-size) var(--grid-size),
+        var(--grid-size) var(--grid-size);
+
+    pointer-events: none;
 }
 
-/* Hover effect using radial gradient mask */
 .grid-background::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  /* Highlighted grid now has blue tint */
-  background-image:
-    linear-gradient(to right, var(--grid-hover-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-hover-color) 1px, transparent 1px);
-  background-size: 24px 24px;
-  /* Circular mask around cursor */
-  mask-image: radial-gradient(
-    250px circle at var(--mouse-x) var(--mouse-y),
-    black 0%,
-    black 40%,
-    transparent 100%
-  );
-  -webkit-mask-image: radial-gradient(
-    250px circle at var(--mouse-x) var(--mouse-y),
-    black 0%,
-    black 40%,
-    transparent 100%
-  );
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(var(--grid-hover-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-hover-color) 1px, transparent 1px);
+
+    background-size:
+        var(--grid-size) var(--grid-size),
+        var(--grid-size) var(--grid-size);
+
+    opacity: .9;
+
+    clip-path: circle(
+        220px at
+        var(--mouse-x)
+        var(--mouse-y)
+    );
+
+    transition: clip-path .08s linear;
 }
 
-/* Smooth transitions */
-* {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 200ms;
+.grid-background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at var(--mouse-x) var(--mouse-y),
+            rgb(6 182 212 / .08),
+            transparent 320px
+        );
+
+    pointer-events: none;
+}
+
+
+:where(
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  svg,
+  path
+) {
+  transition:
+    color .2s,
+    background-color .2s,
+    border-color .2s,
+    fill .2s,
+    stroke .2s;
 }
 
 /* Bold typography with heavier weights */
@@ -212,29 +240,30 @@ p {
   text-wrap: pretty;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 ::-webkit-scrollbar-thumb {
-  background: var(--grid-color);
-  border-radius: 4px;
-  opacity: 0.5;
+    background: color-mix(
+        in srgb,
+        var(--foreground) 18%,
+        transparent
+    );
+
+    border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
-  opacity: 0.3;
+    background: color-mix(
+        in srgb,
+        var(--foreground) 32%,
+        transparent
+    );
 }
 
-/* Vibrant cyan selection color */
 ::selection {
-  background: rgba(6, 182, 212, 0.3);
+    background: color-mix(
+        in srgb,
+        var(--accent-blue) 35%,
+        transparent
+    );
 }
 
 /* Smooth scroll */
