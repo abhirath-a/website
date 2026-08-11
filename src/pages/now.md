@@ -1,20 +1,20 @@
 ---
-layout: ../layouts/Layout.astro
+layout: ../components/Layout.astro
 title: Now 
 prose: true
 ---
 
 ## Now 
-> updated february 2026
+> updated august 2026
 ---
 ### Reading
 
-*The Pelican Brief*&nbsp; by John Grisham
+*The Great Gatsby*&nbsp; by F. Scott Fitzgerald
 
 ### Focusing on
 
-Learning [Rust](https://rust-lang.org) and [Actix Web](https://actix.rs)
+Learning AI and ML
 
 ### Thinking about
 
-Functional Programming and it's simplicity.
+Deterministic Homelabs with NixOS

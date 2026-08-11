@@ -1,6 +1,6 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import projects from "../projects";
+import Layout from "../components/Layout.astro";
+import projects from "../content/projects.ts";
 ---
 
 <Layout title="About">
@@ -34,7 +34,7 @@ import projects from "../projects";
         projects.map((project) => (
           <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
             <div class="flex-1">
-              <h4 class="mb-1 text-lg font-bold lg:text-xl">{project.title}</h4>
+              <a class="mb-1 text-lg font-bold lg:text-xl" href={project.link}>{project.title}</a>
               <p class="text-muted-foreground text-sm">{project.summary}</p>
             </div>
             <span class="text-muted-foreground shrink-0 text-sm font-medium sm:ml-6">

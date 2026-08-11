@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "@/layouts/Layout.astro";
+import Layout from "../../components/Layout.astro";
 
 const posts = await getCollection("blog");
 
@@ -8,8 +8,9 @@ posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <Layout title="Blog">
-  <ul>
-    {
+<ul>
+
+    {posts.length != 0 ?
     posts.map(({ data: post, id}) => (
         <li class="my-2 flex justify-between">
           <a href={`/blog/${id}/`} class="text-lg underline">
@@ -17,7 +18,9 @@ posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
           </a>
           <p>{new Date(post.date).toLocaleDateString()}</p>
         </li>
-      ))
+        ))
+    : 
+    <p>no posts yet, maybe check back later?</p>
     }
   </ul>
 </Layout>

@@ -8,7 +8,7 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: "shiki",
     shikiConfig: {
-      theme: "kanagawa-dragon",
+      theme: "kanagawa-wave",
       wrap: true,
       transformers: [],
     },
