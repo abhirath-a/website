@@ -542,6 +542,90 @@ details[open] > summary span:last-child {
   overflow-wrap: anywhere;
 }
 
+.blog-page {
+  padding-bottom: clamp(65px, 8vw, 116px);
+}
+
+.blog-list {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+}
+.blog-list li {
+  padding-block: 28px;
+  border-top: 1px solid var(--line);
+}
+.blog-list time,
+.blog-description {
+  color: var(--muted);
+  line-height: 1.7;
+}
+.blog-list h2 {
+  margin-block: 12px;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.blog-list a,
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.blog-post {
+  max-width: 75ch;
+  margin-inline: auto;
+  padding-bottom: clamp(65px, 8vw, 116px);
+}
+.blog-post header {
+  margin-block: 40px;
+}
+.blog-post h1 {
+  font-size: clamp(42px, 7vw, 80px);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+.prose {
+  font-size: 18px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.prose :where(p, ul, ol, blockquote, pre, table) {
+  margin-block: 1.25em;
+}
+.prose :where(h2, h3, h4, h5, h6) {
+  margin-block: 1.5em 0.5em;
+  line-height: 1.25;
+}
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+.prose pre {
+  padding: 18px;
+  overflow-x: auto;
+  font-size: 14px;
+}
+.prose table {
+  display: block;
+  overflow-x: auto;
+}
+.prose :where(th, td) {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.prose blockquote {
+  margin-inline: 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+}
+
+.blog-empty {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
 .about-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);

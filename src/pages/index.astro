@@ -51,6 +51,7 @@ const projects = [
     img: "/oculog.png",
     width: 888,
     height: 632,
+    github: "https://github.com/abhirath-a/oculog",
     approach:
       "Built with Expo and React Native, with FastAPI and SQLite handling backend data. The app tracks lens usage and replacement schedules independently for each eye, manages spare inventory, and includes an educational hub with interactive lessons, reference materials, and a RAG based chatbot that can answer questions based off of CDC and FDA guidelines.",
   },
@@ -67,6 +68,7 @@ const projects = [
     img: "/keyframe.jpg",
     width: 1345,
     height: 844,
+    github: "https://github.com/abhirath-a/keyframe",
     // note: "The goal is to make presenting a PDF feel as natural as using dedicated slideshow software, without the clutter of a full document editor.",
     approach:
       "A Tauri desktop application pairs a lightweight TypeScript interface with native Rust integration. PDF.js renders pages onto a canvas, while a separate presentation state manages keyboard navigation, rendering, and slideshow controls.",
@@ -133,6 +135,16 @@ const projects = [
           <h3>{p.name}</h3>
           <p>{p.desc}</p>
           <p class="tech-list">{p.tech}</p>
+          <br>
+            <a
+              class="club-website"
+              href={p.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit ${p.name} github repo (opens in a new tab)`}
+            >
+              Github Repo <span aria-hidden="true">↗</span>
+            </a>
         </div>
 
         {(index + 1) % 2 != 0 && (

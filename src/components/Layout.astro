@@ -1,5 +1,16 @@
 ---
 import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Abhi Agasanakoppa",
+  description = "abhi agasanakoppa — software engineer working on machine learning, systems programming, and embedded software.",
+} = Astro.props;
+const homeLink = (hash: string) => Astro.url.pathname === "/" ? hash : `/${hash}`;
 ---
 
 <!doctype html>
@@ -10,9 +21,9 @@ import "../styles/global.css";
     <meta name="theme-color" content="#90110b" />
     <meta
       name="description"
-      content="abhi agasanakoppa — software engineer working on machine learning, systems programming, and embedded software."
+      content={description}
     />
-    <title>Abhi Agasanakoppa</title>
+    <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
   </head>
   <body>
@@ -30,7 +41,7 @@ import "../styles/global.css";
       <header class="site-header">
         <a
           class="identity"
-          href="#"
+          href={homeLink("#")}
           target="_blank"
           rel="noopener noreferrer"
           title="Opens in a new tab"
@@ -38,16 +49,17 @@ import "../styles/global.css";
           abhi agasanakoppa
         </a>
         <nav aria-label="Main navigation">
-          <a href="#work" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+          <a href={homeLink("#work")}  rel="noopener noreferrer" title="Opens in a new tab">
             projects
           </a>
-          <a href="#clubs" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+          <a href={homeLink("#clubs")}  rel="noopener noreferrer" title="Opens in a new tab">
             clubs
           </a>
-          <a href="#about" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+          <a href={homeLink("#about")}  rel="noopener noreferrer" title="Opens in a new tab">
             about
           </a>
-          <a href="#contact" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+          <a href="/blog" aria-current={Astro.url.pathname.replace(/\/$/, "") === "/blog" ? "page" : undefined}>blog</a>
+          <a href={homeLink("#contact")}  rel="noopener noreferrer" title="Opens in a new tab">
             contact ↗
           </a>
         </nav>
@@ -59,10 +71,6 @@ import "../styles/global.css";
 
       <footer>
         <span>abhi agasanakoppa</span>
-        <span>BUILT WITH ASTRO</span>
-        <a href="#" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
-          ↑ BACK TO THE TOP
-        </a>
       </footer>
     </div>
   </body>
