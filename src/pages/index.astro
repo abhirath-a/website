@@ -1,48 +1,264 @@
 ---
 import Layout from "../components/Layout.astro";
-import projects from "../content/projects.ts";
+
+const clubs = [
+  {
+    name: "Applied AI Lab",
+    role: "Co-Founder & Co-President",
+    description:
+      "Co-founded and lead Wootton's Applied AI Lab, making machine learning accessible through hands-on workshops, collaborative projects, and technical discussions. Develop curriculum covering Python, data science, and machine learning while organizing meetings and guiding members through real-world applications of AI.",
+    logo: "/aail.png",
+    website: "https://wootton.aail.club",
+  },
+  {
+    name: "mCode",
+    role: "Instructor & Club Leader",
+    description:
+      "Lead a middle school programming club at Cabin John, teaching Python, algorithms, and problem-solving through structured lessons and coding challenges. Design beginner and advanced curricula, mentor students of varying experience levels, and organize programming competitions to encourage computational thinking.",
+    logo: "/mcode.png",
+    website: "https://mcodeclub.com",
+  },
+];
+
+const projects = [
+  {
+    name: "GlyphNet",
+    category: "COMPUTER VISION / ML",
+    date: "SEPT 2026",
+    datetime: "2026-09",
+    desc: "Teaching a computer to read handwritten digits through a webcam. A convolutional neural network, a real-time image processing pipeline, and the surprisingly difficult problem of making messy handwriting recognizable.",
+    tech: "Python / PyTorch / OpenCV / Streamlit",
+    type: "vision" as const,
+    metric: "10",
+    label: "handwritten digit classes",
+    img: "/glyphnet.png",
+    width: 980,
+    height: 738,
+    approach:
+      "A PyTorch CNN trained on MNIST handles classification. OpenCV converts webcam frames into isolated, normalized 28×28 digit images using thresholding, morphology, and contour detection. A streamlit interface displays predictions in real time.",
+    github: "https://github.com/abhirath-a/glyphnet",
+  },
+  {
+    name: "Oculog",
+    category: "HEALTH TECH / FULL STACK",
+    date: "OCT 2026",
+    datetime: "2026-10",
+    desc: "Contact lens care is surprisingly easy to lose track of. Oculog brings wear schedules, replacement reminders, inventory, and educational resources into one app.",
+    tech: "React Native / Expo / FastAPI",
+    type: "systems" as const,
+    metric: "2",
+    label: "eyes tracked independently",
+    img: "/oculog.png",
+    width: 888,
+    height: 632,
+    approach:
+      "Built with Expo and React Native, with FastAPI and SQLite handling backend data. The app tracks lens usage and replacement schedules independently for each eye, manages spare inventory, and includes an educational hub with interactive lessons, reference materials, and a RAG based chatbot that can answer questions based off of CDC and FDA guidelines.",
+  },
+  {
+    name: "Keyframe",
+    category: "DESKTOP SOFTWARE / SYSTEMS",
+    date: "APR 2026",
+    datetime: "2026-04",
+    desc: "PDFs are great for sharing presentations, but presenting them shouldn't feel like opening a document viewer. Keyframe is a minimal, keyboard-first presentation app built around the slides themselves.",
+    tech: "Rust / EGUI / MuPDF",
+    type: "systems" as const,
+    metric: "PDF",
+    label: "native presentation workflow",
+    img: "/keyframe.jpg",
+    width: 1345,
+    height: 844,
+    // note: "The goal is to make presenting a PDF feel as natural as using dedicated slideshow software, without the clutter of a full document editor.",
+    approach:
+      "A Tauri desktop application pairs a lightweight TypeScript interface with native Rust integration. PDF.js renders pages onto a canvas, while a separate presentation state manages keyboard navigation, rendering, and slideshow controls.",
+  },
+];
 ---
 
-<Layout title="About">
-  <!-- About -->
-  <section id="about" class="flex flex-col justify-center py-12 lg:py-20">
-    <div
-      class="max-w-2xl space-y-6 text-base leading-relaxed font-medium lg:text-lg"
-    >
-      <p>
-        I’m a student focused on math and computer science, exploring problems
-        at the intersection of theory and real-world systems. I combine
-        analytical thinking with hands-on engineering to build projects in
-        algorithms, data systems, and software.
-      </p>
-      <p>
-        Outside of programming I spend my time reading, taking photos, and
-        hiking in my spare time.
-      </p>
+<Layout>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">SOFTWARE ENGINEER</p>
+        <h1 id="hero-title">Abhi Agasanakoppa</h1>
+        <p>I'm interested in machine learning, software engineering, and computer systems.</p>
+        <p class="intro-note">
+          Lately, I've been building computer vision projects, exploring lower-level programming,
+          and teaching Python and machine learning.
+        </p>
+        <a
+          class="primary-link"
+          href="#work"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Opens in a new tab"
+        >
+          View projects <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <span>PYTHON / RUST / C++</span>
+      <span>Models, runtimes, and embedded systems.</span>
+      <a href="#work" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+        PROJECTS ↓
+      </a>
     </div>
   </section>
-
-  <!-- Work -->
-  <section id="work" class="border-border border-t py-12 lg:py-20">
-    <h3
-      class="text-muted-foreground mb-8 text-sm font-bold tracking-wider uppercase lg:mb-12"
-    >
-      Selected Work
-    </h3>
-    <div class="space-y-8">
-      {
-        projects.map((project) => (
-          <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-            <div class="flex-1">
-              <a class="mb-1 text-lg font-bold lg:text-xl" href={project.link}>{project.title}</a>
-              <p class="text-muted-foreground text-sm">{project.summary}</p>
-            </div>
-            <span class="text-muted-foreground shrink-0 text-sm font-medium sm:ml-6">
-              {project.year}
-            </span>
+  <section id="work">
+    <div class="section-header">
+      <h2>
+        <span>01 /</span> Projects
+      </h2>
+      <span class="section-note">SELECTED WORK</span>
+    </div>
+    {projects.map((p, index) => (
+      <article class="project">
+        {(index + 1) % 2 == 0 && (
+          <div class="project-figure">
+            <img
+              src={p.img}
+              alt={p.name}
+              width={p.width}
+              height={p.height}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
-        ))
-      }
+        )}
+        <div>
+          <div class="project-meta">
+            <span>{p.category}</span>
+            <time datetime={p.datetime}>{p.date}</time>
+          </div>
+          <h3>{p.name}</h3>
+          <p>{p.desc}</p>
+          <p class="tech-list">{p.tech}</p>
+        </div>
+
+        {(index + 1) % 2 != 0 && (
+          <div class="project-figure">
+            <img
+              src={p.img}
+              alt={p.name}
+              width={p.width}
+              height={p.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
+      </article>
+    ))}
+  </section>
+  <section id="clubs" aria-labelledby="clubs-title">
+    <div class="section-header">
+      <h2 id="clubs-title">
+        <span>02 /</span> Leadership
+      </h2>
+    </div>
+    <div class="club-list">
+      {clubs.map((club) => (
+        <article class="club">
+          <div class="club-logo">
+            {club.logo ? (
+              <img src={club.logo} alt="" width="96" height="96" loading="lazy" decoding="async" />
+            ) : (
+              <span aria-hidden="true">LOGO</span>
+            )}
+          </div>
+          <div class="club-copy">
+            <h3>{club.name}</h3>
+            <p class="club-role">{club.role}</p>
+            <p class="club-description">{club.description}</p>
+          </div>
+          {club.website ? (
+            <a
+              class="club-website"
+              href={club.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit ${club.name} website (opens in a new tab)`}
+            >
+              Website <span aria-hidden="true">↗</span>
+            </a>
+          ) : (
+            <span class="club-website-placeholder">Website URL</span>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+  <section id="about">
+    <div class="section-header">
+      <h2>
+        <span>03 /</span> About
+      </h2>
+      <span class="section-note">abhi agasanakoppa</span>
+    </div>
+    <div class="about-layout">
+      <p class="about-lead">
+        I like building things, figuring out how they work, and making them better.
+      </p>
+      <div class="about-copy">
+        <p>
+          I'm a high school student interested in software engineering, machine learning, and
+          computer systems. I enjoy exploring different areas of computing, especially where theory
+          meets practice.
+        </p>
+        <p>
+          Most of what I know comes from building projects, experimenting with unfamiliar tools, and
+          occasionally spending far too long solving a problem that probably has a simpler solution.
+        </p>
+        <p>
+          I also co-lead my school's Applied AI Lab and teach programming to middle school students
+          through mCode.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="contact">
+    <div>
+      <span class="eyebrow">CONTACT</span>
+      <h2>Get in touch.</h2>
+      <p>For engineering roles, collaborations, or a technical conversation.</p>
+    </div>
+    <div class="contact-actions">
+      <a
+        class="email-link"
+        href="mailto:abhi@abhirath.net"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Opens your email app"
+      >
+        email: abhi@abhirath.net <span>↗</span>
+      </a>
+      <a
+        class="email-link"
+        href="https://github.com/abhirath-a"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Opens in a new tab"
+      >
+        github: abhirath-a <span>↗</span>
+      </a>
+      <a
+        class="email-link"
+        href="https://www.linkedin.com/in/abhi-agasanakoppa/"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Opens in a new tab"
+      >
+        linkedin: abhirath-ag <span>↗</span>
+      </a>
+      <a
+        class="email-link"
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Opens PDF in a new tab"
+      >
+        resume <span>↗</span>
+      </a>
     </div>
   </section>
 </Layout>

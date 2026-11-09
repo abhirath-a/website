@@ -1,56 +1,34 @@
 {
-  description = "abhi's portfolio";
+  description = "A basic dev shell flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
   outputs =
+    { self, nixpkgs }:
+    let
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+    in
     {
-      self,
-      nixpkgs,
-      flake-utils,
-    }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          packages = [
-            pkgs.nodejs_24
-            pkgs.pnpm
-          ];
-        };
-        packages.default = pkgs.stdenv.mkDerivation (finalAttrs: {
-          pname = "portfolio";
-          version = "0.0.1";
-          src = ./.;
-          
-          nativeBuildInputs = [
-            pkgs.nodejs_24
-            pkgs.pnpm
-            pkgs.pnpmConfigHook
-          ];
-
-          pnpmDeps = pkgs.fetchPnpmDeps {
-            inherit (finalAttrs) pname version src;
-            fetcherVersion = 4;
-            hash = "sha256-TBXPcTm1HI3fgYMIbNY4lglE2cStcrHEnPO+yKULBsk=";
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = [
+              pkgs.nodejs_26
+              pkgs.pnpm
+            ];
           };
-
-          buildPhase = ''
-            pnpm run build
-          '';
-
-          installPhase = ''
-            cp -r dist $out
-          '';
-        });
-      }
-    );
+        }
+      );
+    };
 }

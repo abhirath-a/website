@@ -1,28 +1,28 @@
 {
-  "name": "portfolio-v3",
+  "name": "abhi-portfolio",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
+    "dev": "astro dev --host 0.0.0.0",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "lint": "biome lint",
-    "format": "biome format --write"
+    "preview": "astro preview --host 0.0.0.0",
+    "check": "pnpm run format:check && pnpm run lint",
+    "check:fix": "node scripts/biome.mjs check . --write --error-on-warnings && pnpm run format",
+    "lint": "node scripts/biome.mjs lint . --error-on-warnings",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "test": "pnpm run build && node --test"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.10",
-    "@astrojs/rss": "^4.0.19",
-    "@fontsource-variable/inter": "^5.2.8",
-    "@fontsource-variable/jetbrains-mono": "^5.2.8",
-    "@tailwindcss/vite": "^4.3.2",
-    "astro": "7.2.0",
-    "tailwindcss": "^4.3.2"
+    "astro": "^7.4.7"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.3",
-    "@tailwindcss/typography": "^0.5.20",
-    "typescript": "^5.9.3"
-  }
+    "@astrojs/compiler-rs": "^0.5.2",
+    "oxfmt": "^0.77.0"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@12.3.4"
 }

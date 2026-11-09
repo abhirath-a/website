@@ -1,87 +1,69 @@
 ---
-interface Props {
-  frontmatter?: {
-    title: string;
-    prose: boolean;
-  };
-  title?: string;
-}
-
-import "../styles/globals.css";
-import "@fontsource-variable/inter";
-import Header from "./Header.astro";
-
-const { title: propTitle, frontmatter } = Astro.props;
-
-const title = propTitle ?? frontmatter?.title ?? "";
-const prose = frontmatter?.prose ?? false;
+import "../styles/global.css";
 ---
 
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Astro description" />
-
-    <link rel="icon" href="/favicon.svg" />
-
-    <meta name="generator" content={Astro.generator} />
-
-    <title>{title ? `${title} · Abhirath` : "Abhirath"}</title>
-  </head>
-
-  <body class="bg-background text-foreground min-h-screen antialiased">
-    <!-- Interactive background -->
-    <div
-      id="grid-bg"
-      aria-hidden="true"
-      class="grid-background pointer-events-none fixed inset-0 -z-10"
+    <meta name="theme-color" content="#90110b" />
+    <meta
+      name="description"
+      content="abhi agasanakoppa — software engineer working on machine learning, systems programming, and embedded software."
     />
-
-    <Header />
-
-    <main
-      class:list={[
-        "bg-background/5 backdrop-blur",
-        "mt-16 min-h-screen",
-        "w-full max-w-4xl",
-        "px-6 py-20",
-        "lg:mt-0 lg:ml-64 lg:px-32 lg:py-16",
-        {
-          "prose dark:prose-invert": prose,
-        },
-      ]}
+    <title>Abhi Agasanakoppa</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+  </head>
+  <body>
+    <a
+      class="skip-link"
+      href="#main"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Opens in a new tab"
     >
-      <slot />
-    </main>
+      Skip to content
+    </a>
 
-    <script is:inline>
-      (() => {
-        const bg = document.getElementById("grid-bg");
-        if (!bg) return;
+    <div class="site-shell">
+      <header class="site-header">
+        <a
+          class="identity"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Opens in a new tab"
+        >
+          abhi agasanakoppa
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#work" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+            projects
+          </a>
+          <a href="#clubs" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+            clubs
+          </a>
+          <a href="#about" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+            about
+          </a>
+          <a href="#contact" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+            contact ↗
+          </a>
+        </nav>
+      </header>
 
-        let mouseX = innerWidth / 2;
-        let mouseY = innerHeight / 2;
-        let frame = 0;
+      <main id="main">
+        <slot />
+      </main>
 
-        const update = () => {
-          bg.style.setProperty("--mouse-x", `${mouseX}px`);
-          bg.style.setProperty("--mouse-y", `${mouseY}px`);
-          frame = 0;
-        };
-
-        addEventListener(
-          "pointermove",
-          (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
-            if (!frame) frame = requestAnimationFrame(update);
-          },
-          { passive: true }
-        );
-      })();
-    </script>
+      <footer>
+        <span>abhi agasanakoppa</span>
+        <span>BUILT WITH ASTRO</span>
+        <a href="#" target="_blank" rel="noopener noreferrer" title="Opens in a new tab">
+          ↑ BACK TO THE TOP
+        </a>
+      </footer>
+    </div>
   </body>
 </html>
