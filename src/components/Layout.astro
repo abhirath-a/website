@@ -42,9 +42,7 @@ const homeLink = (hash: string) => Astro.url.pathname === "/" ? hash : `/${hash}
         <a
           class="identity"
           href={homeLink("#")}
-          target="_blank"
           rel="noopener noreferrer"
-          title="Opens in a new tab"
         >
           abhi agasanakoppa
         </a>
@@ -59,6 +57,7 @@ const homeLink = (hash: string) => Astro.url.pathname === "/" ? hash : `/${hash}
             about
           </a>
           <a href="/blog" aria-current={Astro.url.pathname.replace(/\/$/, "") === "/blog" ? "page" : undefined}>blog</a>
+          <a href="/now">now</a>
           <a href={homeLink("#contact")}  rel="noopener noreferrer" title="Opens in a new tab">
             contact ↗
           </a>

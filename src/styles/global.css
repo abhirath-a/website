@@ -953,3 +953,10 @@ footer a {
     background: #8b292b;
   }
 }
+
+.now {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
